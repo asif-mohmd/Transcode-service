@@ -1,5 +1,5 @@
 import { Status, Transcoder } from "../entities/transcoder";
-import { ITranscodeRepository } from "../interface/ITranscodeRepository";
+import { Data, ITranscodeRepository } from "../interface/ITranscodeRepository";
 import TranscoderModel from "../model/schema/transcoder";
 
 export class TranscodeRepository implements ITranscodeRepository{
@@ -20,6 +20,24 @@ export class TranscodeRepository implements ITranscodeRepository{
         } catch (e: any) {
         //   throw new DBConnectionError()
         }
+      }
+
+      async updateStatus(
+        id: string,
+        status: Status,
+        data: Data
+      ): Promise<Transcoder | null> {
+        try{
+          console.log("kooooorepooooooooooo");
+          
+        const videoData = await TranscoderModel.findByIdAndUpdate(id, {
+          status,
+          ...data,
+        });
+        return videoData;
+    }catch(e:any){
+      throw new e
+    }
       }
 
 }

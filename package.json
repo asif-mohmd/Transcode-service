@@ -11,6 +11,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.567.0",
+    "@aws-sdk/s3-request-presigner": "^3.567.0",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@ffprobe-installer/ffprobe": "^2.1.2",
     "@types/compression": "^1.7.5",
@@ -19,6 +21,8 @@
     "@types/fluent-ffmpeg": "^2.1.24",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/multer": "^1.4.11",
+    "aws": "^0.0.3-2",
+    "aws-sdk": "^2.1610.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -35,6 +39,7 @@
     "multer": "^1.4.5-lts.1",
     "path": "^0.12.7",
     "rimraf": "^5.0.5",
+    "sdk": "^0.5.0",
     "whisper-node-ts": "^0.0.16"
   },
   "devDependencies": {
