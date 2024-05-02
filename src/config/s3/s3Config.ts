@@ -1,9 +1,16 @@
 import { S3Client } from "@aws-sdk/client-s3";
+import 'dotenv/config'
 
-const s3Client = new S3Client({
-    region: "US East (N. Virginia) us-east-1",
+
+const bucketRegion = process.env.S3_BUCKET_REGION || "";
+const accessKey = process.env.ACCESS_KEY_ID || "";
+const secretkey = process.env.SECRET_ACCESS_KEY || "";
+
+
+export const s3 = new S3Client({
+    region: bucketRegion,
     credentials:{
-        accessKeyId: 'AKIA4PKKJ3YHGAVSU2HT',
-        secretAccessKey: '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'
+        accessKeyId: accessKey,
+        secretAccessKey: secretkey
     }
 })
