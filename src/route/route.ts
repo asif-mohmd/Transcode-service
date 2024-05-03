@@ -16,5 +16,6 @@ const interactor = new TranscodeInteractor(repository)
 const controller = new TranscodeController(interactor)
 
 TranscoderRoute.post("/",upload.single("file"),controller.transcodeData.bind(controller))
+TranscoderRoute.get("/videoURL",controller.getData.bind(controller))
 
 export default TranscoderRoute

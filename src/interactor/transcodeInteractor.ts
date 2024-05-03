@@ -1,4 +1,4 @@
-import { Status } from "../entities/transcoder";
+import { Status, Transcoder } from "../entities/transcoder";
 import { ITranscodeInteractor } from "../interface/ITranscodeInteractor";
 import { ITranscodeRepository } from "../interface/ITranscodeRepository";
 import { FFmpegTranscoder } from "../utils/ffmpeg";
@@ -102,4 +102,18 @@ export class TranscodeInteractor implements ITranscodeInteractor {
       console.log(e);
     }
   }
+
+
+  
+  async getData(id: string): Promise<Transcoder | any> {
+    try {
+      const response = await this.repository.getData(id);
+      return response;
+    } catch (e: any) {
+      console.log(e);
+    }
+  }
+
+
+
 }

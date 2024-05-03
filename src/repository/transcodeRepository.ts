@@ -40,4 +40,13 @@ export class TranscodeRepository implements ITranscodeRepository{
     }
       }
 
+      async getData(id: string): Promise<Transcoder | null | any> {
+        try {
+          const response = await TranscoderModel.find({ instructorId: id });
+          return response;
+        } catch (e: any) {
+          // throw new DBConnectionError()
+        }
+      }
+
 }
