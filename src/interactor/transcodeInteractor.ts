@@ -39,9 +39,9 @@ export class TranscodeInteractor implements ITranscodeInteractor {
         generatedName: fileName,
       });
 
-      const wavFilePath = await convertToWav(filePath);
+      // const wavFilePath = await convertToWav(filePath);
       // await transcriber(wavFilePath);
-      const vttFilePath = `${wavFilePath}.vtt`;
+      // const vttFilePath = `${wavFilePath}.vtt`;
       await this.repository.updateStatus(id, Status.finishing, {});
 
       const files = fs.readdirSync(outputDirectoryPath);
@@ -65,37 +65,37 @@ export class TranscodeInteractor implements ITranscodeInteractor {
           const command = new PutObjectCommand(params);
           console.log("commmmmmmmaaaaaaaaaddddddddddddd");
           const rslt = await s3.send(command);
-          fs.unlinkSync(filePaths);
+          // fs.unlinkSync(filePaths);
           console.log(`Uploaded ${file} to S3`);
         } catch (err) {
           throw new Error("s3 error");
         }
       }
 
-      const vttFileBuffer = fs.readFileSync(`${vttFilePath}`);
-      const params: S3Params = {
-        Bucket: process.env.BUCKET_NAME || "",
-        Key: `media/vtt/${fileName}.vtt`,
-        Body: vttFileBuffer,
-        ContentType: "text/vtt",
-      };
-      try {
-        const command = new PutObjectCommand(params);
-        const rslt = await s3.send(command);
-        console.log(`Uploaded vtt to S3`);
-      } catch (err) {
-        throw new Error("error while uploading vtt into s3")
-      }
+      // const vttFileBuffer = fs.readFileSync(`${vttFilePath}`);
+      // const params: S3Params = {
+      //   Bucket: process.env.BUCKET_NAME || "",
+      //   Key: `media/vtt/${fileName}.vtt`,
+      //   Body: vttFileBuffer,
+      //   ContentType: "text/vtt",
+      // };
+      // try {
+      //   const command = new PutObjectCommand(params);
+      //   const rslt = await s3.send(command);
+      //   console.log(`Uploaded vtt to S3`);
+      // } catch (err) {
+      //   throw new Error("error while uploading vtt into s3")
+      // }
 
       console.log(`Deleting locally saved files`);
-      rimraf.sync(outputDirectoryPath);
-      fs.unlinkSync(wavFilePath);
-      fs.unlinkSync(vttFilePath);
-      fs.unlinkSync(filePath);
+      // rimraf.sync(outputDirectoryPath);
+      // fs.unlinkSync(wavFilePath);
+      // fs.unlinkSync(vttFilePath);
+      // fs.unlinkSync(filePath);
       console.log(`Deleted locally saved files`);
 
-      const videoUrl = `https://eduwise.s3.ap-south-1.amazonaws.com/media/hls/${fileName}/${fileName}_master.m3u8`;
-      const subtitleUrl = `https://eduwise.s3.ap-south-1.amazonaws.com/media/vtt/${fileName}.vtt`
+      const videoUrl = `https://transcode-genius.s3.ap-south-1.amazonaws.com/media/hls/${fileName}/${fileName}_master.m3u8`;
+      // const subtitleUrl = `https://transcode-genius.s3.ap-south-1.amazonaws.com/media/vtt/${fileName}.vtt`
       await this.repository.updateStatus(id, Status.completed, { videoUrl });
     } catch (e: any) {
       await this.repository.updateStatus(id, Status.error, {});

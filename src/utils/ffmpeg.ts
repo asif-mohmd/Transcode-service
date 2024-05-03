@@ -96,10 +96,19 @@ const transcodeWithFFmpeg = async (fileName: string, filePath: string) => {
           `-c:a aac`,
           `-b:a ${audioBitrate}`,
           `-vf scale=${resolution}`,
-       
-        ])
+         
+
+        ]).addOptions([
+          "-profile:v baseline",
+          "-level 3.0",
+          "-start_number 0",
+          "-hls_time 10",
+          "-hls_list_size 0",
+          "-master_pl_name master.m3u8",
+      
+      ])
         .output(`${directoryPath}/${outputFileName}`)
-        .on("end", () => resolve())
+        .on('end',(stdout,stderr)=>{console.log(stdout); resolve()})
         .on("error", (err) => reject(err))
         .run();
     });
