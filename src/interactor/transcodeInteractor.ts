@@ -96,7 +96,8 @@ export class TranscodeInteractor implements ITranscodeInteractor {
 
       const videoUrl = `https://transcode-genius.s3.ap-south-1.amazonaws.com/media/hls/${fileName}/${fileName}_master.m3u8`;
       // const subtitleUrl = `https://transcode-genius.s3.ap-south-1.amazonaws.com/media/vtt/${fileName}.vtt`
-      await this.repository.updateStatus(id, Status.completed, { videoUrl });
+     return await this.repository.updateStatus(id, Status.completed, { videoUrl });
+      
     } catch (e: any) {
       await this.repository.updateStatus(id, Status.error, {});
       console.log(e);

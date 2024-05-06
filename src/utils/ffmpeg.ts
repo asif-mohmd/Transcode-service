@@ -99,6 +99,7 @@ const transcodeWithFFmpeg = async (fileName: string, filePath: string) => {
          
 
         ]).addOptions([
+          
           "-profile:v baseline",
           "-level 3.0",
           "-start_number 0",
