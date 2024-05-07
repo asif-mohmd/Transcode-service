@@ -64,21 +64,21 @@ const transcodeWithFFmpeg = async (fileName: string, filePath: string) => {
       videoBitrate: "200k",
       audioBitrate: "64k",
     },
-    // {
-    //   resolution: "640x360",
-    //   videoBitrate: "800k",
-    //   audioBitrate: "128k",
-    // },
-    // {
-    //   resolution: "1280x720",
-    //   videoBitrate: "2500k",
-    //   audioBitrate: "192k",
-    // },
-    // {
-    //   resolution: "1920x1080",
-    //   videoBitrate: "5000k",
-    //   audioBitrate: "256k",
-    // },
+    {
+      resolution: "640x360",
+      videoBitrate: "800k",
+      audioBitrate: "128k",
+    },
+    {
+      resolution: "1280x720",
+      videoBitrate: "2500k",
+      audioBitrate: "192k",
+    },
+    {
+      resolution: "1920x1080",
+      videoBitrate: "5000k",
+      audioBitrate: "256k",
+    },
   ];
 
   const variantPlaylists: { resolution: string; outputFileName: string }[] = [];
