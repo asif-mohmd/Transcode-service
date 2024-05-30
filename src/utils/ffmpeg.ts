@@ -8,9 +8,6 @@ ffmpeg.setFfmpegPath("C:\\ffmpeg\\bin\\ffmpeg.exe");
 
 export const FFmpegTranscoder = async (file: any): Promise<any> => {
   try {
-    console.log("Starting script");
-    console.time("req_time");
-
     const randomName = (bytes = 32) =>
       crypto.randomBytes(bytes).toString("hex");
     const fileName = randomName();
@@ -88,37 +85,46 @@ const transcodeWithFFmpeg = async (fileName: string, filePath: string) => {
     const outputFileName = `${fileName}_${resolution}.m3u8`;
     const segmentFileName = `${fileName}_${resolution}_%03d.ts`;
 
-    await new Promise<void>((resolve, reject) => {
-      ffmpeg(filePath)
-        .outputOptions([
-          `-c:v h264`,
-          `-b:v ${videoBitrate}`,
-          `-c:a aac`,
-          `-b:a ${audioBitrate}`,
-          `-vf scale=${resolution}`,
-         
-
-        ]).addOptions([
-          
-          "-profile:v baseline",
-          "-level 3.0",
-          "-start_number 0",
-          "-hls_time 10",
-          "-hls_list_size 0",
-          "-master_pl_name master.m3u8",
-      
-      ])
-        .output(`${directoryPath}/${outputFileName}`)
-        .on('end',(stdout,stderr)=>{console.log(stdout); resolve()})
-        .on("error", (err) => reject(err))
-        .run();
-    });
-    const variantPlaylist = {
-      resolution,
-      outputFileName,
-    };
-    variantPlaylists.push(variantPlaylist);
-    console.log(`HLS conversion done for ${resolution}`);
+    try {
+      await new Promise<void>((resolve, reject) => {
+        ffmpeg(filePath)
+          .outputOptions([
+            `-c:v h264`,
+            `-b:v ${videoBitrate}`,
+            `-c:a aac`,
+            `-b:a ${audioBitrate}`,
+            `-vf scale=${resolution}`,
+          ])
+          .addOptions([
+            "-profile:v baseline",
+            "-level 3.0",
+            "-start_number 0",
+            "-hls_time 4",
+            "-hls_list_size 0",
+            "-master_pl_name master.m3u8",
+          ])
+          .output(`${directoryPath}/${outputFileName}`)
+          .on("end", (stdout, stderr) => {
+            console.log(stdout);
+            resolve();
+          })
+          .on("error", (err) => reject(err))
+          .run();
+      });
+      const variantPlaylist = {
+        resolution,
+        outputFileName,
+      };
+      variantPlaylists.push(variantPlaylist);
+      console.log(`HLS conversion done for ${resolution}`);
+    } catch (error) {
+      console.error(
+        `Error occurred during HLS conversion for ${resolution}: ${error}`
+      );
+      const status = false;
+      return status;
+      // Handle error as per your requirement, e.g., retry, skip, or terminate.
+    }
   }
   console.log(`HLS master m3u8 playlist generating`);
 
