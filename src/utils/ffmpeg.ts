@@ -4,7 +4,11 @@ import * as path from "path";
 import ffmpeg from "fluent-ffmpeg";
 import crypto from "crypto";
 
-ffmpeg.setFfmpegPath("C:\\ffmpeg\\bin\\ffmpeg.exe");
+ffmpeg.setFfmpegPath("/usr/local/bin/ffmpeg");
+
+// in windows use this commented path . make sure the ffmpeg installed in our system . and also configure path in environment variables
+// ffmpeg.setFfmpegPath("C:\\ffmpeg\\bin\\ffmpeg.exe");
+
 
 export const FFmpegTranscoder = async (file: any): Promise<any> => {
   try {

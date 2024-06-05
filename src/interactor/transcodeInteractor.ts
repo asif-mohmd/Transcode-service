@@ -7,9 +7,9 @@ import { S3Params } from "../interface/custom";
 import fs from "fs";
 import {  PutObjectCommand } from "@aws-sdk/client-s3";
 import { rimraf } from "rimraf";
-import { convertToWav } from "../utils/convert-to-wav";
-import { transcriberNode } from "../utils/node-whisper";
-import {statusCode} from "asif-status-codes-package"
+// import { convertToWav } from "../utils/convert-to-wav";
+// import { transcriberNode } from "../utils/node-whisper";
+// import {statusCode} from "asif-status-codes-package"
 
 export class TranscodeInteractor implements ITranscodeInteractor {
   private repository: ITranscodeRepository;
